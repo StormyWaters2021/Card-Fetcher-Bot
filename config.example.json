@@ -1,0 +1,16 @@
+{
+  "token": "DISCORD_TOKEN_HERE",
+  "game": "game-name-here",
+  "autoUpdate": false,
+  "deckApiBase": "https://tcgbuilder.net/api/deck/",
+  "deckShareBase": "https://www.tcgbuilder.net/?game=dbz-score&deck=",
+  "headerPile": "Main Deck",
+  "footerPile": "Sideboard",
+  "advancedSearchAliases": {
+    "Type": ["card type", "typ"]
+  },
+  "updateIntervalMinutes": 1440,
+  "noMatchMessages": [
+    "*Funny line or message to include with searches that return no results. Randomized with each pull.*"
+  ]
+}
