@@ -23,8 +23,10 @@ if (!config.token) {
 const { token, game, noMatchMessages } = config;
 
 const SET_INDEX_URL = "https://www.tcgbuilder.net/setsIndex.json";
-const IMAGE_URL_BASE = `https://api.tcgbuilder.net/card/${game}/`;
-const WEBSITE_BASE = `https://tcgbuilder.net/card/${game}/`;
+
+function imageUrlFor(card) {
+  return `https://tcgbuilder.net/images/${game}/${encodeURIComponent(card.image)}`;
+}
 
 const deckModule = createDeckModule(config);
 
@@ -251,8 +253,8 @@ if (results.length === 1) {
 
   const sameNameGroup = CARD_DB.filter((c) => c.__nameKey === card.__nameKey);
 
-  const fullImageUrl = `https://tcgbuilder.net/images/${game}/${encodeURIComponent(card.image)}`;
-  const websiteUrl = WEBSITE_BASE + encodeURIComponent(card.name);
+  const fullImageUrl = imageUrlFor(card);
+  const websiteUrl = fullImageUrl;
 
   const embed = new EmbedBuilder()
     .setTitle(card.name)
@@ -266,7 +268,7 @@ if (results.length === 1) {
   if (sameNameGroup.length > 1) {
     const links = sameNameGroup
       .slice(1)
-      .map((c) => `[${c.__setName}](${WEBSITE_BASE}${encodeURIComponent(c.name)})`)
+      .map((c) => `[${c.__setName}](<${imageUrlFor(c)}>)`)
       .join(", ");
 
     embeds.push(
@@ -283,9 +285,7 @@ if (results.length === 1) {
 const lines = shown.map((c) => {
   const setName = c.__setName || c.set || c.setName || "Unknown Set";
   const label = `${c.name} (${setName})`;
-  const imgUrl = `https://tcgbuilder.net/images/${game}/${encodeURIComponent(c.image)}`;
-
-  // Embedded link: URL will not be displayed
+  const imgUrl = imageUrlFor(c);
   return `• [${label}](<${imgUrl}>)`;
 });
 
@@ -316,9 +316,8 @@ const lines = shown.map((c) => {
 
   const sameNameGroup = CARD_DB.filter((c) => c.__nameKey === card.__nameKey);
 
-  const fullImageUrl = `https://tcgbuilder.net/images/${game}/${encodeURIComponent(card.image)}`;
-
-  const websiteUrl = WEBSITE_BASE + encodeURIComponent(card.name);
+  const fullImageUrl = imageUrlFor(card);
+  const websiteUrl = fullImageUrl; 
 
   const embed = new EmbedBuilder()
     .setTitle(card.name)
@@ -332,10 +331,7 @@ const lines = shown.map((c) => {
   if (sameNameGroup.length > 1) {
     const links = sameNameGroup
       .slice(1)
-      .map(
-        (c) =>
-          `[${c.__setName}](${WEBSITE_BASE}${encodeURIComponent(c.name)})`
-      )
+      .map((c) => `[${c.__setName}](<${imageUrlFor(c)}>)`)
       .join(", ");
 
     embeds.push(
