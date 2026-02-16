@@ -12,4 +12,6 @@ Thumbs.db
 config.json
 config.*.json
 
+service_template.txt
+
 !config.example.json
